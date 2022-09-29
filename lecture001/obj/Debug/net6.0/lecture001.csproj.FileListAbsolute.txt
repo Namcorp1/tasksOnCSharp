@@ -1,0 +1,15 @@
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/bin/Debug/net6.0/lecture001
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/bin/Debug/net6.0/lecture001.deps.json
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/bin/Debug/net6.0/lecture001.runtimeconfig.json
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/bin/Debug/net6.0/lecture001.dll
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/bin/Debug/net6.0/lecture001.pdb
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.csproj.AssemblyReference.cache
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.AssemblyInfoInputs.cache
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.AssemblyInfo.cs
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.csproj.CoreCompileInputs.cache
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.dll
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/refint/lecture001.dll
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.pdb
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/lecture001.genruntimeconfig.cache
+/Users/nikitamoskalev/GeekBrains/cSharp/lecture001/obj/Debug/net6.0/ref/lecture001.dll
