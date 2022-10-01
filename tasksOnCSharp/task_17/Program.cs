@@ -1,12 +1,11 @@
 ﻿// 17. Дано число обозначающее день недели. Выяснить является номер дня недели выходным
 // Следующие 2 строки определяют ввод данных.
-// Закомментить 1ую строку если нужно чтобы данные вводились вручную.
-// Закомментить 2ую строку чтобы число само сгенерировалось.
-Console.Write("Введите номер дня недели: ");
-string strNumber = Console.ReadLine();
-int number = Convert.ToInt32(strNumber);
-//int number = new Random().Next(1,8);
-
+// Закомментить 1 строку если нужно чтобы данные вводились вручную.
+// Закомментить 2-4 строкb чтобы число само сгенерировалось.
+int number = new Random().Next(1,8);
+//Console.Write("Введите номер дня недели: ");
+//string strNumber = Console.ReadLine();
+//int number = Convert.ToInt32(strNumber);
 Console.WriteLine($"Дано число: {number}");
 if (number == 7 || number == 6)
 {
