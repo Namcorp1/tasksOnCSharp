@@ -18,7 +18,7 @@ if (number1 == number2)
 {
     Console.WriteLine("Числа одинаковы");
 }
-else
+else //блок проверки большего и меньшего числа
 {
     if (number1 > number2)
     {
