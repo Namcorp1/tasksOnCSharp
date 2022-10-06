@@ -10,7 +10,7 @@
 // приглашение ко вводу
 int EnterCode(string helloText)
 {
-    Console.Write(helloText);
+    Console.Write(helloText + " от 1 до 7 (включительно): ");
     int number = Convert.ToInt32(Console.ReadLine());
     return number;
 }
@@ -32,7 +32,7 @@ void PrintResult(string result, int numberDay)
 }
 
 Console.WriteLine("start");
-int numberDay = EnterCode("Введите номер недели: ");
+int numberDay = EnterCode("Введите номер недели");
 string result = InitialResult(numberDay);
 PrintResult(result, numberDay);
 Console.WriteLine("end");
