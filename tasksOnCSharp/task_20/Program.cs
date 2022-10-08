@@ -28,7 +28,20 @@ void PrintResult (int qPlane, int pointX, int pointY)
     Console.WriteLine(output);
 }
 
+bool CheckPoint (int x, int y)
+{
+    return x == 0 || y == 0;
+}
+
 int pointX = Point("Введите X");
 int pointY = Point("Введите Y");
-int qPlane = Fourth(pointX,pointY);
-PrintResult(qPlane, pointX, pointY);
+bool check = CheckPoint(pointX,pointY);
+if (!check)
+{
+    int qPlane = Fourth(pointX,pointY);
+    PrintResult(qPlane, pointX, pointY);
+}
+else
+{
+    Console.WriteLine("Введён ноль!");
+}

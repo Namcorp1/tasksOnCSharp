@@ -10,19 +10,20 @@
 int EnterCode(string text)
 {
     Console.Write(text);
-    int input = Math.Abs(Convert.ToInt32(Console.ReadLine()));
+    int input = Convert.ToInt32(Console.ReadLine());
     return input;
 }
 
 // вычисление 3ей цифры
-int ThirdNumber(int number)
+int ThirdNumberVar1(int number)
 {
     int den = 1;
     while (number / den > 1000)
     {
         den *= 10;
     }
-    int thirdNum = (number / den) - (number - (number % (den *10))) / den ;
+    // int thirdNum = (number / den) - (number - (number % (den *10))) / den ;
+    int thirdNum = number / den % 10;
     return thirdNum;
 }
 
@@ -43,7 +44,7 @@ void CheckNumber(int number)
 {
     if (number < -99 || number > 99)
     {
-        int thirdNumber = ThirdNumber(number);
+        int thirdNumber = ThirdNumberVar1(number);
         Print(number,thirdNumber);
     }
     else
