@@ -22,7 +22,7 @@ int ThirdNumberVar1(int number)
     {
         den *= 10;
     }
-    // int thirdNum = (number / den) - (number - (number % (den *10))) / den ;
+    //int thirdNum = (number / den) - (number - (number % (den *10))) / den ;
     int thirdNum = number / den % 10;
     return thirdNum;
 }
