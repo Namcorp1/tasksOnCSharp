@@ -4,7 +4,7 @@
 int EnterCode()
 {
 Console.Write("Введите число: ");
-int n = Convert.ToInt32(Console.ReadLine());
+int n = Math.Abs(Convert.ToInt32(Console.ReadLine()));
 return n;
 }
 // разворот числа (метод возвращает и принимает)
@@ -13,6 +13,13 @@ int Reverse(int num)
 int reNum = 0;
 int numeral = 0;
 int count = 0;
+/*
+Разворот любого числа, по условиям задачи нужно проверить пятизначное,
+но сделаем чуть больше. Проверочное число собирается путём цикла - 
+нахождение остатка от введенного числа и умножение на 10
+в степени в зависимости от счётчика. Этот остаток потом убирается 
+у введенного числа путем деления на 10 и далее по новой
+*/
 while (num >= 1)
 {
     numeral = num % 10;
@@ -33,6 +40,9 @@ else Console.WriteLine("Не палиндром!");
 // клиентский код
 Console.WriteLine("start");
 int number = EnterCode();
+// в Reverse есть лишняя строка 29, которую добавил просто
+// для отображения разворота, её нужно закомментить
+// что соблюдалось правило "в методе либо логика, либо интерфейс
 int reNumber = Reverse(number);
 PrintResult(reNumber,number);
 Console.WriteLine("end");
