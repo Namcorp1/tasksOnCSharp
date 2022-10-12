@@ -34,13 +34,8 @@ int SumNumeral(int num)
     }
     arrayN[count] = num;
     int size = arrayN.Length;
-    count = 0;
     int sum = 0;
-    while (count < size)
-    {
-        sum += arrayN[count];
-        count += 1;
-    }
+    for (count = 0; count < size; count ++) sum += arrayN[count];
     return sum;
 }
 // вывод результата
