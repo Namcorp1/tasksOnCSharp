@@ -34,7 +34,6 @@ int[] AddArray(int size)
             array[count] = number;
             count += 1;
         }
-
     }
     return array;
 }
