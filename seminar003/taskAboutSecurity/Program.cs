@@ -13,97 +13,92 @@
 Суть: показать интервалы, когда было больше всего людей в магазине
 Ответ: 4-5, 11-13
 */
-int[] InputData(string text1)
+
+//ввод данных для журнала посещения
+int[] InputData()
 {
-    //string timeShop = Console.ReadLine();
-    int count = text1.Length;
-    string time1 = "";
-    string time2 = "";
-    if (count == 3)
+    Console.WriteLine("Введите интервалы времени, когда закончите ввод, введите в консоль 'stop'.");
+    int[] timeClient = new int[2];
+    string text1 = "";
+    int hour1 = 0;
+    int hour2 = 0;
+    int i = 0;
+    while (text1 != "stop")
     {
-        time1 = $"{text1[0]}";
-        time2 = $"{text1[2]}";
+        Console.Write("Введите интервал времени: ");
+        text1 = Console.ReadLine();
+        if (text1 == "stop") break;
+        else //если не введено стоп, то разбиваем введенный текст на часы
+        {
+            int count = text1.Length;
+            string time1 = "";
+            string time2 = "";
+            if (count == 3)
+            {
+                time1 = $"{text1[0]}";
+                time2 = $"{text1[2]}";
+            }
+            else if (count == 4)
+            {
+                time1 = $"{text1[0]}";
+                time2 = $"{text1[2]}" + $"{text1[3]}";
+            }
+            else if (count == 5)
+            {
+                time1 = $"{text1[0]}" + $"{text1[1]}";
+                time2 = $"{text1[3]}" + $"{text1[4]}";
+            }
+            hour1 = Convert.ToInt32(time1);
+            hour2 = Convert.ToInt32(time2);
+            timeClient[i] = hour1; //закидываем в отдельный почасовой массив
+            timeClient[i + 1] = hour2;
+            i += 2;
+            Array.Resize(ref timeClient, timeClient.Length + 2);
+        }
     }
-    else if (count == 4)
+    Array.Resize(ref timeClient, timeClient.Length - 2);
+    Console.WriteLine(string.Join(',', timeClient)); //можно убрать
+    return timeClient;
+}
+//формируем массив с количеством посещений в каждый час
+int[] HoursCount(int[] arr)
+{
+    /* создаем массив на 25, а не на 24 элемента, 
+    так как при максимальном кол-ве посетителей в последнем часу, 
+    вывод идет некорректно */
+    int[] timeline = new int[25];
+    for (int j = 0; j < arr.Length - 1; j += 2)
     {
-        time1 = $"{text1[0]}";
-        time2 = $"{text1[2]}" + $"{text1[3]}";
+        int hours = arr[j + 1] - arr[j];
+        for (int k = 0; k <= hours; k++)
+        {
+            timeline[arr[j] + k] += 1;
+        }
     }
-    else if (count == 5)
-    {
-        time1 = $"{text1[0]}" + $"{text1[1]}";
-        time2 = $"{text1[3]}" + $"{text1[4]}";
-    }
-    int hour1 = Convert.ToInt32(time1);
-    int hour2 = Convert.ToInt32(time2);
-
-    int[] timeline = new int[24];
-    while (hour1 <= hour2)
-    {
-        timeline[hour1] += 1;
-        hour1++;
-    }
-
-    Console.WriteLine(string.Join(',', timeline));
+    Console.WriteLine(string.Join(',', timeline)); //можно убрать
     return timeline;
 }
-// создаём массивы с "1" в часы посещения
-int[] time1 = InputData("9-12");
-int[] time2 = InputData("9-15");
-int[] time3 = InputData("14-18");
-int[] time4 = InputData("17-18");
-int[] time5 = InputData("20-20");
-int[] time6 = InputData("9-19");
-int[] time7 = InputData("19-21");
-
-// создаем массив, где суммируем эти единички 
-// чтобы понять какие часы максимальны по посещению
-int index = 0;
-int[] timeResult = new int[24];
-while (index < 24)
+//вывод результата
+void PrintResult(int[] time1)
 {
-    timeResult[index] = time1[index] + time2[index] + time3[index] +
-             time4[index] + time5[index] + time6[index] + time7[index];
-    index++;
-}
-// находим максимальное посещение в час
-// и первый час с таким посещением - 1ый цикл
-// и сколько в целом было таких часов - 2ой цикл
-index = 0;
-int maxHour = timeResult[index];
-int maxI = -1;
-int count = 0;
-while (index < 24)
-{
-    if (maxHour < timeResult[index])
+    for (int e = 0; e < time1.Length; e++)
     {
-        maxHour = timeResult[index];
-        maxI = index;
+        int maxHour = time1[e];
+        int maxH = -1;
+        for (int i = e; i < time1.Length; i++) //находим максимальный элемент в массиве
+        {
+            if (time1[i] > maxHour) { maxHour = time1[i]; maxH = i; }
+        }
+        for (int j = maxH; j < time1.Length; j++) //находим крайний макс.элемент, которые идут подряд
+        {
+            if (time1[j] != maxHour) { e = (j - 1); break; }
+            else time1[j] = 0; //убираем макс.элементы чтобы потом не мешали
+        }
+        Console.WriteLine($"{maxH} - {e}");
+        Console.WriteLine(string.Join(',', time1)); //можно убрать
     }
-    index++;
 }
-index = 0;
-while (index < 24)
-{
-    if (timeResult[index] == maxHour) 
-    {
-        count += 1;
-    }
-    index++;
-}
-// пытаюсь теперь вычленить все часы с этим посещением
-index = maxI;
-// int[] MaxHours = new int[count];
-// int indexMax = maxI;
-// while (maxI < 24)
-// {
-//     if (timeResult[maxI] == timeResult[indexMax])
-//     {
-//         in
-//     }
-// }
 
-Console.WriteLine(maxHour);
-Console.WriteLine(maxI);
-Console.WriteLine(count);
-Console.WriteLine(string.Join(',', timeResult));
+int[] list = InputData();
+int[] hours = HoursCount(list);
+PrintResult(hours);
