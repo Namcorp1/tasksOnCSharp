@@ -79,8 +79,11 @@ int[] HoursCount(int[] arr)
     return timeline;
 }
 //вывод результата
-void PrintResult(int[] time1)
+void Result(int[] time1)
 {
+    //int[] answer = new int[2];
+    //int k = 0;
+    //int[,] answer = new int[2,1];
     for (int e = 0; e < time1.Length; e++)
     {
         int maxHour = time1[e];
@@ -94,11 +97,18 @@ void PrintResult(int[] time1)
             if (time1[j] != maxHour) { e = (j - 1); break; }
             else time1[j] = 0; //убираем макс.элементы чтобы потом не мешали
         }
+        // answer[0,0] = maxH;
+        // answer[1,0] = e;
+        //answer[k] = maxH;
+        //answer[k + 1] = e;
+        //k += 2;
+        //Array.Resize(ref answer, answer.Length + 2);
         Console.WriteLine($"{maxH} - {e}");
         Console.WriteLine(string.Join(',', time1)); //можно убрать
     }
+    //return answer;
 }
 
 int[] list = InputData();
 int[] hours = HoursCount(list);
-PrintResult(hours);
+Result(hours);
