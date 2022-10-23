@@ -71,12 +71,12 @@ void PrintResult(int[,] matrix1, int[,] matrix2, int[,] result)
     }
 }
 
+//клиентский код
 int rows1 = InputData("кол-во строк 1ой матрицы");
 int columns1 = InputData("кол-во столбцов 1ой матрицы");
 int rows2 = InputData("кол-во строк 2ой матрицы");
 int columns2 = InputData("кол-во столбцов 2ой матрицы");
-if (columns1 != rows2) Console.WriteLine("Матрицы несовместимы для умножения!");
-else
+if (columns1 == rows2)
 {
     int[,] matrix1 = CreateArray(rows1, columns1);
     int[,] matrix2 = CreateArray(rows2, columns2);
@@ -86,3 +86,4 @@ else
     result = MultiPlication(matrix1, matrix2, result);
     PrintResult(matrix1, matrix2, result);
 }
+else Console.WriteLine("Матрицы несовместимы для умножения!");
