@@ -44,33 +44,18 @@ int[] FillArray(int[] arr)
 }
 
 // цикл выведения группы
-int[] CreateGroup(int[] arr, int num)
+int CreateGroup(int[] arr, int dif)
 {
-    int finish = arr.Length;
-    int[] res = new int[num];
-    for (int i = 1; i <= num; i++)
+    int[] group = new int[arr.Length];
+    for (int i = 0; i < arr.Length; i++)
     {
-        res = new int[num];
-        for (int j = 0; j < finish; j++)
-        {
-            if (arr[j] == i)
-            {
-                res[j] = arr[j];
-                arr[j] = 0;
-                Console.WriteLine(string.Join(',', arr));
-                //Console.WriteLine(string.Join(',', res));
-            }
-            else if (arr[j] % i == 0) j++;
-            //else if (arr[j] / i == 0) res[j] = arr[j];
-        }
+        if (arr[i] == dif) return arr[i];
+        else if (arr[i] % dif != 0) return CreateGroup(arr, dif + 1);
     }
-    return res;
+    Console.WriteLine(string.Join(',', group));
 }
 
 int size = InputSizeArray();
-int[] array = CreateArray(size);
-array = FillArray(array);
-int[] result = CreateGroup(array, size);
-Console.WriteLine();
-Console.WriteLine(string.Join(',', array));
-//Console.WriteLine(string.Join(',', result));
+int[] numbers = CreateArray(size);
+numbers = FillArray(numbers);
+CreateGroup(numbers, 2);
