@@ -43,19 +43,58 @@ int[] FillArray(int[] arr)
     return arr;
 }
 
-// цикл выведения группы
-int CreateGroup(int[] arr, int dif)
-{
-    int[] group = new int[arr.Length];
-    for (int i = 0; i < arr.Length; i++)
-    {
-        if (arr[i] == dif) return arr[i];
-        else if (arr[i] % dif != 0) return CreateGroup(arr, dif + 1);
-    }
-    Console.WriteLine(string.Join(',', group));
-}
+// создание групп чисел
+// int[] CreateGroup(int[] arr, int[] group, int index, int dif)
+// {
+//     // если мы прогнали массив при одном делителе
+//     if (index > arr.Length - 1)
+//     {
+//         // создаем следующую группу, обнуляем индекс и увеличиваем делитель
+//         index = 0;
+//         group = new int[arr.Length];
+//         return CreateGroup(arr, group, index, dif + 1);
+//     }
+//     else if (dif > arr.Length)
+//     {
+//         //если все делители кончились то возвращаем группу чисел
+//         return group;
+//     }
+//     // если не делится без остатка
+//     else if (arr[index] % dif != 0)
+//     {
+//         // то закидываем в новую группу и запускаем
+//         group[index] = arr[index];
+//         return CreateGroup(arr, group, index + 1, dif);
+//     }
+//     return CreateGroup(arr, group, index + 1, dif);
+// }
 
 int size = InputSizeArray();
 int[] numbers = CreateArray(size);
 numbers = FillArray(numbers);
-CreateGroup(numbers, 2);
+int[] res = CreateArray(size);
+//res = CreateGroup(numbers, res, 0, 1);
+int[] difArray = new int[1];
+int n = 0;
+int index = 0;
+difArray[n] = numbers[index];
+index++;
+while (index < numbers.Length)
+{
+    while (n <= difArray.Length)
+    {
+        if (numbers[index] % difArray[n] == 0)
+        {
+            if (index < numbers.Length) index++;
+        }
+        else
+        {
+            Array.Resize(ref difArray, difArray.Length + 1);
+            n++;
+            difArray[n] = numbers[index];
+        }
+        
+    }
+}
+Console.WriteLine(string.Join(',', numbers));
+Console.WriteLine(string.Join(',', difArray));
