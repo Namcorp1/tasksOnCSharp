@@ -42,59 +42,82 @@ int[] FillArray(int[] arr)
     }
     return arr;
 }
+// находим минимальный элемент массива 
+int MinElement(int[] numbers)
+{
+    int min = numbers[0];
+    for (int i = 0; i < numbers.Length - 1; i++)
+    {
+        for (int j = i + 1; j < numbers.Length; j++)
+        {
 
-// создание групп чисел
-// int[] CreateGroup(int[] arr, int[] group, int index, int dif)
-// {
-//     // если мы прогнали массив при одном делителе
-//     if (index > arr.Length - 1)
-//     {
-//         // создаем следующую группу, обнуляем индекс и увеличиваем делитель
-//         index = 0;
-//         group = new int[arr.Length];
-//         return CreateGroup(arr, group, index, dif + 1);
-//     }
-//     else if (dif > arr.Length)
-//     {
-//         //если все делители кончились то возвращаем группу чисел
-//         return group;
-//     }
-//     // если не делится без остатка
-//     else if (arr[index] % dif != 0)
-//     {
-//         // то закидываем в новую группу и запускаем
-//         group[index] = arr[index];
-//         return CreateGroup(arr, group, index + 1, dif);
-//     }
-//     return CreateGroup(arr, group, index + 1, dif);
-// }
+            if (numbers[j] < min)
+            {
+                min = numbers[j];
+            }
+        }
+    }
+    return min;
+}
+// прогоняем этот элемент через весь массив 
+// с добавлением того, что не делиться без остатка
+int[] DiffArray(int[] arr, int[] group, int min)
+{
+    group[group.Length - 1] = min;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (arr[i] == min) arr[i] = 0;
+    }
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = 0; j < group.Length; j++)
+        {
+            if (arr[i] % group[j] != 0)
+            {
+                Array.Resize(ref group, group.Length + 1);
+                group[group.Length - 1] = arr[i];
+                if(!(CheckDif(group,arr[i])))
+                {
+                    group[group.Length - 1] = 0;
+                    Array.Resize(ref group, group.Length - 1);
+                }
+            }
+        }
+    }
+    return group;
+}
+
+// проверка на делимость числа
+bool CheckDif(int[] nums, int num)
+{
+    bool[] check = new bool[nums.Length];
+    for (int i = 0; i < nums.Length; i++)
+    {
+        if (nums[i] % num == 0) check[i] = true;
+        else check[i] = false;
+    }
+    for (int i = 0; i < check.Length; i++)
+    {
+        if (check[i]) return false;
+    }
+    return true;
+}
 
 int size = InputSizeArray();
 int[] numbers = CreateArray(size);
 numbers = FillArray(numbers);
-int[] res = CreateArray(size);
-//res = CreateGroup(numbers, res, 0, 1);
-int[] difArray = new int[1];
-int n = 0;
-int index = 0;
-difArray[n] = numbers[index];
-index++;
-while (index < numbers.Length)
-{
-    while (n <= difArray.Length)
-    {
-        if (numbers[index] % difArray[n] == 0)
-        {
-            if (index < numbers.Length) index++;
-        }
-        else
-        {
-            Array.Resize(ref difArray, difArray.Length + 1);
-            n++;
-            difArray[n] = numbers[index];
-        }
-        
-    }
-}
+int min = MinElement(numbers);
+int[] group = new int[1];
+group = DiffArray(numbers, group, min);
 Console.WriteLine(string.Join(',', numbers));
-Console.WriteLine(string.Join(',', difArray));
+min = 2;
+int[] group2 = new int[1];
+group2 = DiffArray(numbers, group2, min);
+
+Console.WriteLine(string.Join(',', group));
+Console.WriteLine(string.Join(',', group2));
+Console.WriteLine(string.Join(',', numbers));
+Console.WriteLine(min);
+
+// начинаем заполнять массив с делителями
+
