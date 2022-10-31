@@ -107,17 +107,9 @@ int size = InputSizeArray();
 int[] numbers = CreateArray(size);
 numbers = FillArray(numbers);
 int min = MinElement(numbers);
-int[] group = new int[1];
+int[] group = new int[min];
 group = DiffArray(numbers, group, min);
+int[] group2 = new int[2];
+group = DiffArray(numbers, group2, 2);
 Console.WriteLine(string.Join(',', numbers));
-min = 2;
-int[] group2 = new int[1];
-group2 = DiffArray(numbers, group2, min);
-
 Console.WriteLine(string.Join(',', group));
-Console.WriteLine(string.Join(',', group2));
-Console.WriteLine(string.Join(',', numbers));
-Console.WriteLine(min);
-
-// начинаем заполнять массив с делителями
-
