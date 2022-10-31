@@ -42,24 +42,24 @@ int[] FillArray(int[] arr)
     }
     return arr;
 }
+
 // находим минимальный элемент массива 
 int MinElement(int[] numbers)
 {
-    int min = numbers[0];
-    for (int i = 0; i < numbers.Length - 1; i++)
+    int index = 0;
+    for (int i = 0; i < numbers.Length; i++)
     {
-        for (int j = i + 1; j < numbers.Length; j++)
+        if (numbers[i] != 0)
         {
-
-            if (numbers[j] < min)
-            {
-                min = numbers[j];
-            }
+            index = i;
+            break;
         }
     }
+    int min = numbers[index];
     return min;
 }
-// прогоняем этот элемент через весь массив 
+
+// прогоняем min элемент через весь массив 
 // с добавлением того, что не делиться без остатка
 int[] DiffArray(int[] arr, int[] group, int min)
 {
@@ -74,13 +74,17 @@ int[] DiffArray(int[] arr, int[] group, int min)
         {
             if (arr[i] % group[j] != 0)
             {
+                // если делиться с остатком то загоняем для начала в массив
                 Array.Resize(ref group, group.Length + 1);
                 group[group.Length - 1] = arr[i];
-                if(!(CheckDif(group,arr[i])))
+                // но теперь отдельно проверим на остальных делителях
+                if (!(CheckDif(group, arr[i])))
                 {
-                    group[group.Length - 1] = 0;
+                    // если все таки не подходят, то удаляем обратно
                     Array.Resize(ref group, group.Length - 1);
                 }
+                // и если подходит, то зануляем, что добавили
+                else arr[i] = 0;
             }
         }
     }
@@ -90,26 +94,33 @@ int[] DiffArray(int[] arr, int[] group, int min)
 // проверка на делимость числа
 bool CheckDif(int[] nums, int num)
 {
-    bool[] check = new bool[nums.Length];
-    for (int i = 0; i < nums.Length; i++)
+    for (int i = 0; i < nums.Length - 1; i++)
     {
-        if (nums[i] % num == 0) check[i] = true;
-        else check[i] = false;
-    }
-    for (int i = 0; i < check.Length; i++)
-    {
-        if (check[i]) return false;
+        if (num % nums[i] == 0) return false;
     }
     return true;
 }
 
+//печать результата
+void PrintResult(int[] group, int count)
+{
+    string output = $"Группа {count}: {string.Join(',', group)}";
+    Console.WriteLine(output);
+}
+
+//клиентский код
 int size = InputSizeArray();
 int[] numbers = CreateArray(size);
 numbers = FillArray(numbers);
-int min = MinElement(numbers);
-int[] group = new int[min];
-group = DiffArray(numbers, group, min);
-int[] group2 = new int[2];
-group = DiffArray(numbers, group2, 2);
-Console.WriteLine(string.Join(',', numbers));
-Console.WriteLine(string.Join(',', group));
+int sum = 0;
+int count = 1;
+while (sum < size)
+{
+    int min = MinElement(numbers);
+    int[] group = new int[1];
+    group = DiffArray(numbers, group, min);
+    PrintResult(group, count);
+    sum += group.Length;
+    count ++;
+}
+
