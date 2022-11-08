@@ -82,13 +82,7 @@ int[] PrimeNumber(int num)
     for (int i = 2; i <= num; i++)
     {
         bool b = true;
-        for (int j = 2; j < i; j++)
-        {
-            if (i % j == 0 && i % 1 == 0)
-            {
-                b = false;
-            }
-        }
+        for (int j = 2; j < i; j++) if (i % j == 0 && i % 1 == 0) b = false;
         if (b)
         {
             nod[nod.Length - 1] = i;
@@ -121,7 +115,7 @@ int[] PrimeFactors(int num)
 }
 
 //нахождение наименьшего общего делителя для каждого слагаемого
-(int, int) CommonFactor(int[] numM, int[] numN)
+(int, int) MultiplierSum(int[] numM, int[] numN)
 {
     for (int i = 0; i < numM.Length; i++)
     {
@@ -153,21 +147,23 @@ int[] SumFraction(int[] fraction1, int[] fraction2, int num1, int num2)
         result[0] += (result[1] / result[2]);
         result[1] = result[1] % result[2];
     }
-
     return result;
 }
 
+//вывод результата
 void PrintResult(int[] fraction1, int[] fraction2, int[] sum)
 {
-    string output = $"{fraction1[0]}({fraction1[1]}/{fraction1[2]}) + {fraction2[0]}({fraction2[1]}/{fraction2[2]}) = {sum[0]}({sum[1]}/{sum[2]})";
+    string output = $"{fraction1[0]}({fraction1[1]}/{fraction1[2]})" 
+               + $" + {fraction2[0]}({fraction2[1]}/{fraction2[2]})" 
+               + $" = {sum[0]}({sum[1]}/{sum[2]})";
     Console.WriteLine(output);
 }
 
-
+//клиентский код
 int[] fraction1 = InputData("1 дробь");
 int[] fraction2 = InputData("2 дробь");
 int[] numsp1 = PrimeFactors(fraction1[2]);
 int[] numsp2 = PrimeFactors(fraction2[2]);
-(int number1, int number2) = CommonFactor(numsp1, numsp2);
+(int number1, int number2) = MultiplierSum(numsp1, numsp2);
 int[] sum = SumFraction(fraction1, fraction2, number1, number2);
 PrintResult(fraction1,fraction2,sum);
