@@ -1,38 +1,16 @@
-﻿/*
-1. Описать представление обыкновенной дроби
-  1/4  11/22  14/21
-2. Описать логику сокращения дроби
-  1/4 -> 1/4   11/22 -> 1/2  14/21 -> 2/3
-3. Продумать над тем, как хранить целую часть
-      1
-   5 ---    
-      3
-4. Описать логику сложения двух дробей (в другой задаче)
-5. Логика описывается методами
-
-Q m/n
-1   25             
--  ---              
-3  111  
-*/
-
-/*Много строк написано можно сказать лишними, так как прикрутил сюда ввод и обработоку 
-целую часть дроби, что нелогично учитывая, что целая часть никак не участвует в сокращении дроби,
-она остается неизменной.*/
+﻿//4. Описать логику сложения двух дробей
 
 //ввод дроби
-(int, int, int) InputData()
+int[] InputData(string text)
 {
     string fullPart = "";
     string numinator = "";
     string denuminator = "";
-    int f = 0;
-    int m = 0;
-    int n = 0;
+    int[] fraction = new int[3];
     bool check = false;
     while (!check)
     {
-        Console.WriteLine("Введите дробь в формате:");
+        Console.WriteLine($"Введите {text} в формате:");
         Console.WriteLine("'числитель'/'знаменатель' или 'целая часть'('числитель'/'знаменатель')");
         string data = Console.ReadLine();
         bool full = false;
@@ -59,7 +37,9 @@ Q m/n
                     break;
                 }
             }
-            check = int.TryParse(fullPart, out f) && int.TryParse(numinator, out m) && int.TryParse(denuminator, out n);
+            check = int.TryParse(fullPart, out fraction[0])
+                 && int.TryParse(numinator, out fraction[1])
+                 && int.TryParse(denuminator, out fraction[2]);
             if (!check)
             {
                 fullPart = "";
@@ -78,7 +58,8 @@ Q m/n
                     break;
                 }
             }
-            check = int.TryParse(numinator, out m) && int.TryParse(denuminator, out n);
+            check = int.TryParse(numinator, out fraction[1])
+                 && int.TryParse(denuminator, out fraction[2]);
             if (!check)
             {
                 numinator = "";
@@ -86,7 +67,7 @@ Q m/n
             }
         }
     }
-    return (f, m, n);
+    return fraction;
 }
 
 //простые числа
@@ -139,69 +120,54 @@ int[] PrimeFactors(int num)
     return mp;
 }
 
-//нахождение наибольшего общего делителя
-int CommonFactor(int[] numM, int[] numN)
+//нахождение наименьшего общего делителя для каждого слагаемого
+(int, int) CommonFactor(int[] numM, int[] numN)
 {
-    int[] common = new int[1];
     for (int i = 0; i < numM.Length; i++)
     {
         for (int j = 0; j < numN.Length; j++)
         {
             if (numM[i] == numN[j])
             {
-                common[common.Length - 1] = numM[i];
-                Array.Resize(ref common, common.Length + 1);
-                numM[i] = 0;
+                numN[j] = 1;
+                numM[i] = 1;
             }
         }
     }
-    Array.Resize(ref common, common.Length - 1);
-    int res = 1;
-    for (int i = 0; i < common.Length; i++)
-    {
-        res *= common[i];
-    }
-    return res;
+    int res1 = 1;
+    int res2 = 1;
+    for (int i = 0; i < numM.Length; i++) res1 *= numM[i];
+    for (int i = 0; i < numN.Length; i++) res2 *= numN[i];
+    return (res1, res2);
 }
 
-//сокращение дроби
-(int, int) Reduction(int m, int n, int factor) { return (m / factor, n / factor); }
-
-//вывод результата
-void PrintResult(int fullPart, int beforeNum, int beforeDenum
-                             , int afterNum, int afterDenum)
+//сложение дробей
+int[] SumFraction(int[] fraction1, int[] fraction2, int num1, int num2)
 {
-    string output = "";
-    if (fullPart == 0)
+    int[] result = new int[3];
+    result[0] = fraction1[0] + fraction2[0];
+    result[1] = fraction1[1] * num2 + fraction2[1] * num1;
+    result[2] = fraction1[2] * num2;
+    if (result[1] >= result[2])
     {
-        if (beforeNum == afterNum)
-        { output = $"{beforeNum}/{beforeDenum} - несократимая дробь!"; }
-        else
-        { output = $"{beforeNum}/{beforeDenum} -> {afterNum}/{afterDenum}"; }
+        result[0] += (result[1] / result[2]);
+        result[1] = result[1] % result[2];
     }
-    else
-    {
-        if (beforeNum == afterNum)
-        { output = $"{fullPart}({beforeNum}/{beforeDenum}) - несократимая дробь!"; }
-        else
-        { output = $"{fullPart}({beforeNum}/{beforeDenum}) -> {fullPart}({afterNum}/{afterDenum})"; }
-    }
+
+    return result;
+}
+
+void PrintResult(int[] fraction1, int[] fraction2, int[] sum)
+{
+    string output = $"{fraction1[0]}({fraction1[1]}/{fraction1[2]}) + {fraction2[0]}({fraction2[1]}/{fraction2[2]}) = {sum[0]}({sum[1]}/{sum[2]})";
     Console.WriteLine(output);
 }
 
-//клиентский код
-(int f, int m, int n) = InputData();
-if (m == 1)
-{
-   if (f == 0) Console.WriteLine($"{m}/{n} - несократимая дробь!"); 
-   else Console.WriteLine($"{f}({m}/{n}) - несократимая дробь!");
-}
-else
-{
-    int[] multiM = PrimeFactors(m);
-    int[] multiN = PrimeFactors(n);
-    int factor = CommonFactor(multiM, multiN);
-    (int a, int b) = Reduction(m, n, factor);
-    PrintResult(f, m, n, a, b);
-}
 
+int[] fraction1 = InputData("1 дробь");
+int[] fraction2 = InputData("2 дробь");
+int[] numsp1 = PrimeFactors(fraction1[2]);
+int[] numsp2 = PrimeFactors(fraction2[2]);
+(int number1, int number2) = CommonFactor(numsp1, numsp2);
+int[] sum = SumFraction(fraction1, fraction2, number1, number2);
+PrintResult(fraction1,fraction2,sum);
